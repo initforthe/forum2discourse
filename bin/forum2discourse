@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'forum2discourse'
+puts "Required OK!"

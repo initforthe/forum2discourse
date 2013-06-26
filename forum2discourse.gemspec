@@ -6,6 +6,8 @@ Gem::Specification.new do |s|
   s.description   = "Exports through a database connection various forums to discourse json format. Initially supporting PunBB"
   s.authors       = ["Tom Russell"]
   s.email         = "tom.russell@initforthe.com"
-  s.files         = Dir.glob("lib/**/*.rb")
+  s.files        += Dir.glob("lib/**/*.rb")
+  puts s.files.inspect
   s.homepage      = "http://initforthe.com"
+  s.executables << 'forum2discourse'
 end
