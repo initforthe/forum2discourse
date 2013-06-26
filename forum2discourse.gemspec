@@ -1,6 +1,9 @@
+$:.push File.expand_path("../lib", __FILE__)
+require 'forum2discourse'
+
 Gem::Specification.new do |s|
   s.name          = "forum2discourse"
-  s.version       = "0.0.0.pre"
+  s.version       = Forum2Discourse::VERSION
   s.date          = "2013-06-26"
   s.summary       = "Exports various forums data structures to discourse"
   s.description   = "Exports through a database connection various forums to discourse json format. Initially supporting PunBB"
