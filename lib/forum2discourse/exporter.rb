@@ -9,6 +9,7 @@ module Forum2Discourse
     end
 
     def initialize(type, options)
+      setup_database(options.delete(:database))
       @exporter = @registry[type].new(options)
     end
 
@@ -16,5 +17,10 @@ module Forum2Discourse
       @exporter.perform
     end
 
+    private
+
+    def setup_database
+
+    end
   end
 end

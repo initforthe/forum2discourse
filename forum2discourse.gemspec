@@ -9,9 +9,11 @@ Gem::Specification.new do |s|
   s.description   = "Exports through a database connection various forums to discourse json format. Initially supporting PunBB"
   s.authors       = ["Tom Russell"]
   s.email         = "tom.russell@initforthe.com"
-  s.files         = %w(README.md forum2discourse.gemspec)
+  s.files         = %w(README.md)
   s.files        += Dir.glob("lib/**/*.rb")
-  puts s.files.inspect
   s.homepage      = "http://initforthe.com"
   s.executables << 'forum2discourse'
+  s.add_dependency 'data_mapper'
+  s.add_dependency 'dm-postgres-adapter'
+  s.add_dependency 'dm-mysql-adapter'
 end
