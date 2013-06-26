@@ -9,7 +9,7 @@ module Forum2Discourse
     end
 
     def initialize(type, options)
-      setup_database(options.delete(:database))
+      setup_database(options.delete(:connection_string))
       @exporter = @registry[type].new(options)
     end
 
@@ -19,8 +19,9 @@ module Forum2Discourse
 
     private
 
-    def setup_database
-
+    def setup_database(connection_string)
+      DataMapper::Logger.new($stdout, :debug)
+      DataMapper.setup(:default, options[:connection_string])
     end
   end
 end
