@@ -1,3 +1,7 @@
+require 'data_mapper'
+require 'dm-postgres-adapter'
+require 'dm-mysql-adapter'
+
 module Forum2Discourse
   class Exporter
 
@@ -8,9 +12,18 @@ module Forum2Discourse
       @registry[type] = format
     end
 
+    def self.registered?(type)
+      @registry.has_key? type
+    end
+
+    def self.create(type, options)
+      @registry[type].new(options)
+    end
+
     def initialize(type, options)
       setup_database(options.delete(:connection_string))
-      @exporter = @registry[type].new(options)
+      @exporter = self.class.create(type, options)
+      self
     end
 
     def perform
@@ -21,7 +34,7 @@ module Forum2Discourse
 
     def setup_database(connection_string)
       DataMapper::Logger.new($stdout, :debug)
-      DataMapper.setup(:default, options[:connection_string])
+      DataMapper.setup(:default, connection_string)
     end
   end
 end

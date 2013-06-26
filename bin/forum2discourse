@@ -29,13 +29,15 @@ def bomb(message)
   exit
 end
 
-bomb "You must provide a type (-f, --from TYPE)" unless options.has_key? :type
-bomb "You must provide a connection string (-d, --database DATABASE)" unless options.has_key? :connection_string
-
 if ARGV.size == 0
   puts $parser
   exit
 end
 
 $parser.parse!
-puts options.inspect
+
+bomb "You must provide a type (-f, --from TYPE)" unless options.has_key? :type
+bomb "You must provide a connection string (-d, --database DATABASE)" unless options.has_key? :connection_string
+bomb "Type #{options[:type]} not found" unless Forum2Discourse::Exporter.registered? options[:type].to_sym
+
+Forum2Discourse::Exporter.new(options.delete(:type).to_sym, options).perform
