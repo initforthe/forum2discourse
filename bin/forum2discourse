@@ -4,9 +4,17 @@ require 'forum2discourse'
 
 options = {table_prefix: ''}
 
-parser = OptionParser.new do |opts|
-  opts.on '-f', '--from TYPE', 'Type of software to export from. Supported: punbb, wordpress' do |t|
-    options[:type] = f
+$parser = OptionParser.new do |opts|
+  opts.on '-f', '--from TYPE', 'Type of software to export from. Supported: punbb, wordpress' do |type|
+    options[:type] = type
+  end
+
+  opts.on '-d', '--database DATABASE',
+    "The database connection string to connect to. i.e.:",
+    "  sqlite:///path/to/project.db",
+    "  mysql://user:password@hostname/database",
+    "  postgres://user:password@hostname/database", '  ' do |cs|
+    options[:connection_string] = cs
   end
 
   opts.on '-h', '--help', 'Display this screen' do
@@ -15,10 +23,19 @@ parser = OptionParser.new do |opts|
   end
 end
 
-if ARGV.size == 0
-  puts parser
+def bomb(message)
+  puts message
+  puts $parser
   exit
 end
 
-parser.parse!
+bomb "You must provide a type (-f, --from TYPE)" unless options.has_key? :type
+bomb "You must provide a connection string (-d, --database DATABASE)" unless options.has_key? :connection_string
+
+if ARGV.size == 0
+  puts $parser
+  exit
+end
+
+$parser.parse!
 puts options.inspect
