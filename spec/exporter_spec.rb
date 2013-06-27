@@ -7,18 +7,24 @@ describe Forum2Discourse::Exporter do
       Forum2Discourse::Exporter.registry.size.should eq(0)
     end
 
-    context 'when punbb is loaded' do
+    context 'when an exporter is loaded' do
       before do
-        require 'forum2discourse/exporters/punbb'
+        require 'mocks/test_exporter'
       end
 
-      it 'has one registered type when punbb is loaded' do
+      it 'has one registered type' do
         Forum2Discourse::Exporter.registry.size.should eq(1) 
       end
 
-      it 'shows punbb as registered' do
-        Forum2Discourse::Exporter.registered?(:punbb).should be_true
+      it 'shows test as registered' do
+        Forum2Discourse::Exporter.registered?(:test).should be_true
       end
     end
+  end
+
+  describe 'database_setup' do
+    # Stub DataMapper.setup
+    # initialize new Exporter with args
+    # Expect datamapper to recieve setup with args of database
   end
 end
