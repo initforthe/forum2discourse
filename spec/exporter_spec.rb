@@ -19,6 +19,10 @@ describe Forum2Discourse::Exporter do
       it 'shows test as registered' do
         Forum2Discourse::Exporter.registered?(:test).should be_true
       end
+
+      it 'does not show fake as registered' do
+        Forum2Discourse::Exporter.registered?(:fake).should be_false
+      end
     end
   end
 
