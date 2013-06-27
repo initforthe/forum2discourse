@@ -2,26 +2,39 @@ require 'spec_helper'
 require 'forum2discourse/exporter'
 
 describe Forum2Discourse::Exporter do
-  describe "registry" do
+  before(:each) do
+    Forum2Discourse::Exporter.instance_variable_set("@registry", {})
+  end
+
+  describe "#registry" do
     it 'has no registered types when first loaded' do
-      Forum2Discourse::Exporter.registry.size.should eq(0)
+      expect(Forum2Discourse::Exporter.registry).to be_empty
+    end
+
+    it 'has 1 registered type when a type is registered' do
+      Forum2Discourse::Exporter.register(:test, Object.new)
+      expect(Forum2Discourse::Exporter.registry.size).to eq(1) 
+    end
+  end
+
+  describe "#registered?" do
+    context 'without an exporter loaded' do
+      it 'shows test as unregistered' do
+        expect(Forum2Discourse::Exporter.registered?(:test)).to be_false
+      end
     end
 
     context 'when an exporter is loaded' do
       before do
-        require 'mocks/test_exporter'
-      end
-
-      it 'has one registered type' do
-        Forum2Discourse::Exporter.registry.size.should eq(1) 
+        Forum2Discourse::Exporter.register(:test, Object.new)
       end
 
       it 'shows test as registered' do
-        Forum2Discourse::Exporter.registered?(:test).should be_true
+        expect(Forum2Discourse::Exporter.registered?(:test)).to be_true
       end
 
       it 'does not show fake as registered' do
-        Forum2Discourse::Exporter.registered?(:fake).should be_false
+        expect(Forum2Discourse::Exporter.registered?(:fake)).to be_false
       end
     end
   end
