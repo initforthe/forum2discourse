@@ -6,18 +6,20 @@ module Forum2Discourse
   class Exporter
 
     # Store a registry of exporters
-    @registry = {}
+    def self.registry
+      @registry ||= {}
+    end
 
     def self.register(type, format)
-      @registry[type] = format
+      registry[type] = format
     end
 
     def self.registered?(type)
-      @registry.has_key? type
+      registry.has_key? type
     end
 
     def self.create(type, options)
-      @registry[type].new(options)
+      registry[type].new(options)
     end
 
     def initialize(type, options)
