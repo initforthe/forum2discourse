@@ -2,6 +2,8 @@
 -- Table structure for table `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
+
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cat_name` varchar(80) NOT NULL DEFAULT 'New Category',

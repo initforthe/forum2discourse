@@ -1,10 +1,11 @@
 require 'spec_helper'
+require 'test_database'
 require 'forum2discourse/exporter'
 require 'forum2discourse/exporters/punbb'
 
 describe Forum2Discourse::Exporters::PunBB do
   before do
-    # Set up test database
+    TestDatabase.prepare
   end
 
   describe "#categories" do
