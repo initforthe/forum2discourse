@@ -33,7 +33,9 @@ module Forum2Discourse
     end
 
     def perform
-      @exporter.perform
+      {}.tap do |output|
+        output[:categories] = @exporter.categories
+      end
     end
 
     private
