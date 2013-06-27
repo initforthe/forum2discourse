@@ -39,9 +39,25 @@ describe Forum2Discourse::Exporter do
     end
   end
 
-  describe '#database_setup' do
+  describe '#new' do
     # Stub DataMapper.setup
     # initialize new Exporter with args
     # Expect datamapper to recieve setup with args of database
+    before do
+      class MyExporter
+        def initialize(options); end
+      end
+      Forum2Discourse::Exporter.register(:test, MyExporter)
+    end
+
+    it 'connects to the provided database' do
+      DataMapper.should_receive(:setup).with(:default, 'mysql://root@localhost/database')
+      Forum2Discourse::Exporter.new(:test, connection_string: 'mysql://root@localhost/database')
+    end
+
+    it 'creates the correct exporter' do
+      MyExporter.should_receive(:new)
+      Forum2Discourse::Exporter.new(:test, connection_string: 'mysql://root@localhost/database')
+    end
   end
 end
