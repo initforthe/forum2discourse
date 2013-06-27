@@ -13,7 +13,7 @@ describe Forum2Discourse::Exporter do
 
     it 'has 1 registered type when a type is registered' do
       Forum2Discourse::Exporter.register(:test, Object.new)
-      expect(Forum2Discourse::Exporter.registry.size).to eq(1) 
+      expect(Forum2Discourse::Exporter.registry).to have(1).item
     end
   end
 
@@ -39,7 +39,7 @@ describe Forum2Discourse::Exporter do
     end
   end
 
-  describe 'database_setup' do
+  describe '#database_setup' do
     # Stub DataMapper.setup
     # initialize new Exporter with args
     # Expect datamapper to recieve setup with args of database
