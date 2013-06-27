@@ -3,7 +3,7 @@ require 'forum2discourse/exporter'
 
 describe Forum2Discourse::Exporter do
   before(:each) do
-    Forum2Discourse::Exporter.instance_variable_set("@registry", {})
+    Forum2Discourse::Exporter.clear_registry
   end
 
   describe "#registry" do

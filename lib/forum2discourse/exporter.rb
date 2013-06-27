@@ -10,6 +10,10 @@ module Forum2Discourse
       @registry ||= {}
     end
 
+    def self.clear_registry
+      @registry = {}
+    end
+
     def self.register(type, format)
       registry[type] = format
     end
