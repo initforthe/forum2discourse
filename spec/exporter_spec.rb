@@ -52,12 +52,12 @@ describe Forum2Discourse::Exporter do
 
     it 'connects to the provided database' do
       DataMapper.should_receive(:setup).with(:default, 'mysql://root@localhost/database')
-      Forum2Discourse::Exporter.new(:test, connection_string: 'mysql://root@localhost/database')
+      Forum2Discourse::Exporter.create(:test, connection_string: 'mysql://root@localhost/database')
     end
 
     it 'creates the correct exporter' do
       MyExporter.should_receive(:new)
-      Forum2Discourse::Exporter.new(:test, connection_string: 'mysql://root@localhost/database')
+      Forum2Discourse::Exporter.create(:test, connection_string: 'mysql://root@localhost/database')
     end
   end
 end

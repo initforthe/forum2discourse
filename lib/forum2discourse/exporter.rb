@@ -23,22 +23,13 @@ module Forum2Discourse
     end
 
     def self.create(type, options)
-      registry[type].new(options)
-    end
-
-    def initialize(type, options)
       setup_database(options.delete(:connection_string))
-      @exporter = self.class.create(type, options)
-      self
-    end
-
-    def perform
-      @exporter.topics
+      registry[type].new(options)
     end
 
     private
 
-    def setup_database(connection_string)
+    def self.setup_database(connection_string)
       DataMapper::Logger.new($stdout, :debug)
       DataMapper.setup(:default, connection_string)
     end

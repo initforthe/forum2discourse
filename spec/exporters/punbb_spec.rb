@@ -12,13 +12,12 @@ describe Forum2Discourse::Exporters::PunBB do
     Forum2Discourse::Exporter.register(:punbb, Forum2Discourse::Exporters::PunBB)
   end
 
-  let(:exporter) { Forum2Discourse::Exporter.new(:punbb, connection_string: 'mysql://root@127.0.0.1:3306/forum2discourse_test') }
-  let(:output) { exporter.perform }
+  let(:exporter) { Forum2Discourse::Exporter.create(:punbb, connection_string: 'mysql://root@127.0.0.1:3306/forum2discourse_test') }
 
-  describe "#perform" do
+  describe "#topics" do
     it 'returns an array of Forum2Discourse::Discourse::Topics' do
-      expect(output).to be_kind_of(Array)
-      output.should each do |item|
+      expect(exporter.topics).to be_kind_of(Array)
+      exporter.topics.should each do |item|
         expect(item).to be_kind_of(Forum2Discourse::Discourse::Topic)
       end
     end
