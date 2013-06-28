@@ -5,9 +5,5 @@ module Forum2Discourse::Exporters
     def initialize(options)
       self
     end
-
-    def perform
-      puts "The magic is happening for #{self.inspect}!"
-    end
   end
 end

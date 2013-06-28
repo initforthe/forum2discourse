@@ -7,13 +7,13 @@ module TestDatabase
   def self.prepare
     DataMapper::Logger.new($stdout, :info)
     DataMapper.setup(:test, TEST_DATABASE_CONNECTION_STRING)
-    execute_queries_from(categories_sql)
+    execute_queries_from(forums_sql)
     execute_queries_from(posts_sql)
   end
 
   def self.execute_queries_from(sql)
     # Datamapper won't execute queries containing ';'
-    categories_sql.split(';').each do |statement|
+    sql.split(';').each do |statement|
       next if statement.chomp.empty?
       begin
         DataMapper.repository(:test).adapter.execute(statement)
@@ -25,8 +25,8 @@ module TestDatabase
     end
   end
 
-  def self.categories_sql
-    File.open("#{RSPEC_ROOT}/test_data/categories.sql", 'r') { |f| f.read }
+  def self.forums_sql
+    File.open("#{RSPEC_ROOT}/test_data/forums.sql", 'r') { |f| f.read }
   end
 
   def self.posts_sql

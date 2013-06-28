@@ -9,8 +9,14 @@ describe Forum2Discourse::Exporters::PunBB do
   end
 
   describe "#categories" do
-    it 'exports the correct categories' do
-      pending('test database not implemented yet')
+    let(:exporter) { Forum2Discourse::Exporter.new(:punbb, connection_string: 'mysql://root@127.0.0.1:3306/forum2discourse_test') }
+    let(:expected_output) do
+      {
+        fields: ['']
+      }
+    end
+    it 'exports forums as categories' do
+      expet(exporter.perform).to be(expected_output)
     end
   end
 end
