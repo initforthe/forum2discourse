@@ -16,4 +16,7 @@ class Forum2Discourse::Models::PunBB::Topic
   property :sticky,       Boolean
   property :moved_to,     Integer
   property :forum_id,     Integer
+
+  def to_discourse
+  end
 end

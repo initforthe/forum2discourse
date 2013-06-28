@@ -14,7 +14,13 @@ module Forum2Discourse::Exporters
     end
 
     def topics
-      Forum2Discourse::Models::PunBB::Topic.all
+      convert(Forum2Discourse::Models::PunBB::Topic.all)
+    end
+
+    private
+
+    def convert(collection)
+      collection.map(&:to_discourse)
     end
   end
 end
