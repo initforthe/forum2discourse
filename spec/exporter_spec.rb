@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'forum2discourse/exporter'
+require 'forum2discourse'
 
 describe Forum2Discourse::Exporter do
   before(:each) do

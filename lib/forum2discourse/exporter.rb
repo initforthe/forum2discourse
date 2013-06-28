@@ -1,6 +1,7 @@
 require 'data_mapper'
 require 'dm-postgres-adapter'
 require 'dm-mysql-adapter'
+require 'forum2discourse/models/discourse'
 
 module Forum2Discourse
   class Exporter
