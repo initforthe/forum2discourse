@@ -1,4 +1,5 @@
 require 'data_mapper'
+require 'dm-mysql-adapter'
 
 module TestDatabase
   # XXX This will need refactoring when >1 format is used.
