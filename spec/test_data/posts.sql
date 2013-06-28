@@ -20,5 +20,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5302 ;
 
 INSERT INTO `posts` (`id`, `poster`, `poster_id`, `poster_ip`, `poster_email`, `message`, `hide_smilies`, `posted`, `edited`, `edited_by`, `topic_id`, `rt_transaction`, `rt_post_to`) VALUES
-(64, 'George Clooney', 6, '130.88.234.61', NULL, 'Test Message', 0, 1100872795, NULL, NULL, 19, NULL, NULL),
-(65, 'Nigella Lawson', 27, '207.179.75.20', NULL, 'Test Message 2', 0, 1100877698, NULL, NULL, 14, NULL, NULL);
+(1, 'George Clooney', 1, '130.88.234.61', NULL, 'Test Message', 0, 1100872795, NULL, NULL, 1, NULL, NULL),
+(2, 'Nigella Lawson', 2, '207.179.75.20', NULL, 'Test Message 2', 0, 1100877698, NULL, NULL, 1, NULL, NULL),
+(3, 'Peter Stringfellow', 3, '130.88.234.61', NULL, 'Test Message 3', 0, 1100872795, NULL, NULL, 2, NULL, NULL),
+(4, 'Andreas Villas-Boas', 4, '207.179.75.20', NULL, 'Test Message 4', 0, 1100877698, NULL, NULL, 2, NULL, NULL);

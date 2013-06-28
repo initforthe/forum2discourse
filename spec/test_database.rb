@@ -10,6 +10,7 @@ module TestDatabase
     DataMapper.setup(:test, TEST_DATABASE_CONNECTION_STRING)
     execute_queries_from(forums_sql)
     execute_queries_from(posts_sql)
+    execute_queries_from(topics_sql)
   end
 
   def self.execute_queries_from(sql)
@@ -32,5 +33,9 @@ module TestDatabase
 
   def self.posts_sql
     File.open("#{RSPEC_ROOT}/test_data/posts.sql", 'r') { |f| f.read }
+  end
+
+  def self.topics_sql
+    File.open("#{RSPEC_ROOT}/test_data/topics.sql", 'r') { |f| f.read }
   end
 end

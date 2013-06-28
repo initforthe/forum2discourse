@@ -15,10 +15,10 @@ describe Forum2Discourse::Exporters::PunBB do
   let(:exporter) { Forum2Discourse::Exporter.create(:punbb, connection_string: 'mysql://root@127.0.0.1:3306/forum2discourse_test') }
 
   describe "#topics" do
-    it 'returns an array of Forum2Discourse::Discourse::Topics' do
+    it 'returns an Array of Forum2Discourse::Models::Discourse::Topic' do
       expect(exporter.topics).to be_kind_of(Array)
       exporter.topics.should each do |item|
-        expect(item).to be_kind_of(Forum2Discourse::Discourse::Topic)
+        expect(item).to be_kind_of(Forum2Discourse::Models::Discourse::Topic)
       end
     end
 
