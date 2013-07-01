@@ -31,7 +31,7 @@ module Forum2Discourse
     private
 
     def self.setup_database(connection_string)
-      DataMapper::Logger.new($stdout, :debug)
+      DataMapper::Logger.new($stdout, :info)
       DataMapper.setup(:default, connection_string)
     end
   end

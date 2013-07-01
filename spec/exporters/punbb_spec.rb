@@ -12,6 +12,8 @@ describe Forum2Discourse::Exporters::PunBB do
   end
 
   let(:exporter) { Forum2Discourse::Exporter.create(:punbb, connection_string: 'mysql://root@127.0.0.1:3306/forum2discourse_test') }
+  # Unsure as to tying this to the test schema so tightly...
+  let(:topic_titles) { ['Test Topic', 'Test Topic 2'] }
 
   describe "#topics" do
     it 'returns an Array of Forum2Discourse::Models::Discourse::Topic' do
@@ -25,8 +27,12 @@ describe Forum2Discourse::Exporters::PunBB do
       expect(exporter.topics).to have(2).items
     end
 
-    it 'returns the correct topics' do
+    it 'returns topics with correct categories' do
       pending
+    end
+
+    it 'returns the correct topics' do
+      expect(exporter.topics.map(&:title)).to eq(topic_titles)
     end
 
     it 'returns the correct posts for a topic' do

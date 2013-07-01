@@ -17,7 +17,14 @@ class Forum2Discourse::Models::PunBB::Topic
   property :moved_to,     Integer
   property :forum_id,     Integer
 
+  has n, :posts, 'Forum2Discourse::Models::PunBB::Post'
+  belongs_to :forum, 'Forum2Discourse::Models::PunBB::Forum'
+
   def to_discourse
-    Forum2Discourse::Models::Discourse::Topic.new
+    Forum2Discourse::Models::Discourse::Topic.new({
+      title: subject,
+      created_at: posted,
+      category: forum.forum_name
+    })
   end
 end
