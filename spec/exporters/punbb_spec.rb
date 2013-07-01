@@ -22,13 +22,15 @@ describe Forum2Discourse::Exporters::PunBB do
     end
 
     it 'returns the correct number of topics' do
-      expect(output.topics).to have(2).items
+      expect(exporter.topics).to have(2).items
     end
 
-    it 'returns the correct posts per topic' do
-      output.topics.each do |topic|
-        expect(topic.posts).to have(2).items
-      end
+    it 'returns the correct topics' do
+      pending
+    end
+
+    it 'returns the correct posts for a topic' do
+      pending
     end
   end
 end

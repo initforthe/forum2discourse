@@ -18,5 +18,6 @@ class Forum2Discourse::Models::PunBB::Topic
   property :forum_id,     Integer
 
   def to_discourse
+    Forum2Discourse::Models::Discourse::Topic.new
   end
 end
