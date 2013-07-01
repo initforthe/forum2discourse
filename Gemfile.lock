@@ -60,6 +60,10 @@ GEM
     json (1.8.0)
     json_pure (1.8.0)
     multi_json (1.7.7)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     stringex (1.5.1)
     uuidtools (2.1.4)
 
@@ -70,3 +74,4 @@ DEPENDENCIES
   data_mapper
   dm-mysql-adapter
   dm-postgres-adapter
+  simplecov
