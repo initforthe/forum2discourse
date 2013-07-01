@@ -24,7 +24,8 @@ class Forum2Discourse::Models::PunBB::Topic
     Forum2Discourse::Models::Discourse::Topic.new({
       title: subject,
       created_at: posted,
-      category: forum.forum_name
+      category: forum.forum_name,
+      posts: posts.map(&:to_discourse).map(&:serialize)
     })
   end
 end

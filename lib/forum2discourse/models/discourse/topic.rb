@@ -15,11 +15,11 @@ class Forum2Discourse::Models::Discourse::Topic < Forum2Discourse::Models::Disco
   attr_accessor :posts
 
   def initialize(attrs)
-    super
     @posts = []
+    super
   end
 
   def serialize
-    super.merge(posts: posts)
+    super.merge(posts: @posts)
   end
 end

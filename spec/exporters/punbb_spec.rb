@@ -20,7 +20,10 @@ describe Forum2Discourse::Exporters::PunBB do
         category: 'Forum One',
         created_at: Time.new(2004,11,15,16,07,23), 
         title: 'Test Topic',
-        posts: []
+        posts: [
+          {title: '', raw: 'Test Message', created_at: Time.new(2004,11,19,13,59,55), category: 'Forum One'},
+          {title: '', raw: 'Test Message 2', created_at: Time.new(2004,11,19,15,21,38), category: 'Forum One'}
+        ]
       })
     end
 
@@ -38,7 +41,7 @@ describe Forum2Discourse::Exporters::PunBB do
     end
 
     it 'returns topics with correct categories' do
-      pending
+      expect(exporter.topics.map(&:category)).to eq(['Forum One', 'Forum Two'])
     end
 
     it 'returns the correct topic data' do
