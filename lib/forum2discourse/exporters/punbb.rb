@@ -13,8 +13,8 @@ module Forum2Discourse::Exporters
       self
     end
 
-    def topics
-      convert(Forum2Discourse::Models::PunBB::Topic.all)
+    def topics(args={})
+      convert(Forum2Discourse::Models::PunBB::Topic.all(args))
     end
 
     private

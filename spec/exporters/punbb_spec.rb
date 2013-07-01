@@ -13,9 +13,19 @@ describe Forum2Discourse::Exporters::PunBB do
 
   let(:exporter) { Forum2Discourse::Exporter.create(:punbb, connection_string: 'mysql://root@127.0.0.1:3306/forum2discourse_test') }
   # Unsure as to tying this to the test schema so tightly...
-  let(:topic_titles) { ['Test Topic', 'Test Topic 2'] }
-
   describe "#topics" do
+    let(:deep_topic) do
+      # Deep representation of a single topic
+      Forum2Discourse::Models::Discourse::Topic.new({
+        category: 'Forum One',
+        created_at: Time.new(2004,11,15,16,07,23), 
+        title: 'Test Topic',
+        posts: []
+      })
+    end
+
+    let(:first_topic) { exporter.topics(order: [:id.asc]).first }
+
     it 'returns an Array of Forum2Discourse::Models::Discourse::Topic' do
       expect(exporter.topics).to be_kind_of(Array)
       exporter.topics.each do |item|
@@ -31,8 +41,8 @@ describe Forum2Discourse::Exporters::PunBB do
       pending
     end
 
-    it 'returns the correct topics' do
-      expect(exporter.topics.map(&:title)).to eq(topic_titles)
+    it 'returns the correct topic data' do
+      expect(first_topic.serialize).to eq(deep_topic.serialize)
     end
 
     it 'returns the correct posts for a topic' do
