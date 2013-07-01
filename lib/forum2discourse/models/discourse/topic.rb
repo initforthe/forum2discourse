@@ -20,6 +20,6 @@ class Forum2Discourse::Models::Discourse::Topic < Forum2Discourse::Models::Disco
   end
 
   def serialize
-    super.merge(posts: @posts)
+    super.tap { |s| s.delete(:posts) }
   end
 end

@@ -14,16 +14,23 @@ describe Forum2Discourse::Exporters::PunBB do
   let(:exporter) { Forum2Discourse::Exporter.create(:punbb, connection_string: 'mysql://root@127.0.0.1:3306/forum2discourse_test') }
   # Unsure as to tying this to the test schema so tightly...
   describe "#topics" do
+    let(:first_topic_posts) do
+      [
+          Forum2Discourse::Models::Discourse::Post.new(
+            {title: '', raw: 'Test Message', created_at: Time.new(2004,11,19,13,59,55), category: 'Forum One'},
+          ),
+          Forum2Discourse::Models::Discourse::Post.new(
+            {title: '', raw: 'Test Message 2', created_at: Time.new(2004,11,19,15,21,38), category: 'Forum One'}
+          )
+      ]
+    end
+
     let(:deep_topic) do
       # Deep representation of a single topic
       Forum2Discourse::Models::Discourse::Topic.new({
         category: 'Forum One',
         created_at: Time.new(2004,11,15,16,07,23), 
-        title: 'Test Topic',
-        posts: [
-          {title: '', raw: 'Test Message', created_at: Time.new(2004,11,19,13,59,55), category: 'Forum One'},
-          {title: '', raw: 'Test Message 2', created_at: Time.new(2004,11,19,15,21,38), category: 'Forum One'}
-        ]
+        title: 'Test Topic'
       })
     end
 
@@ -49,7 +56,7 @@ describe Forum2Discourse::Exporters::PunBB do
     end
 
     it 'returns the correct posts for a topic' do
-      pending
+      expect(first_topic.posts.map(&:serialize)).to eq(first_topic_posts.map(&:serialize))
     end
   end
 end
