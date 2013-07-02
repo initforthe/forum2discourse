@@ -14,7 +14,7 @@ module Forum2Discourse::Exporters
     end
 
     def topics(args={})
-      convert(Forum2Discourse::Models::PunBB::Topic.all(args))
+      @topics ||= convert(Forum2Discourse::Models::PunBB::Topic.all(args))
     end
 
     private
