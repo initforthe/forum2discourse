@@ -6,7 +6,7 @@ namespace :forum2discourse do
     exporter.topics.each do |topic|
       u = User.first
       g = Guardian.new
-      TopicCreator.new(g.user, g, topic.serialize).create
+      TopicCreator.new(u, g, topic.serialize).create
     end
   end
 end
