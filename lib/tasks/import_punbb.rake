@@ -4,7 +4,7 @@ namespace :forum2discourse do
     exporter = Forum2Discourse::Exporter.create(:punbb, connection_string: 'mysql://root@127.0.0.1:3306/bytemark_punbb')
     puts "Importing #{exporter.topics.size} topics"
     exporter.topics.each do |topic|
-      u = User.first
+      u = User.admins.first
       g = Guardian.new
       TopicCreator.new(u, g, topic.serialize).create
     end
