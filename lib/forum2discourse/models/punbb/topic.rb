@@ -21,6 +21,8 @@ class Forum2Discourse::Models::PunBB::Topic
   belongs_to :forum, 'Forum2Discourse::Models::PunBB::Forum'
 
   def to_discourse
+    # Break early if the forum this post should be in does not exist anymore
+    return nil if forum.nil?
     Forum2Discourse::Models::Discourse::Topic.new({
       title: subject,
       created_at: posted,

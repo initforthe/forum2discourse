@@ -20,7 +20,7 @@ module Forum2Discourse::Exporters
     private
 
     def convert(collection)
-      collection.map(&:to_discourse)
+      collection.map(&:to_discourse).compact
     end
   end
 end
