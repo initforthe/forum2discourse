@@ -5,7 +5,7 @@ namespace :forum2discourse do
     puts "Importing #{exporter.topics.size} topics"
     exporter.topics.each do |topic|
       u = User.admins.first
-      g = Guardian.new
+      g = Guardian.new(u)
       TopicCreator.new(u, g, topic.serialize).create
     end
   end
