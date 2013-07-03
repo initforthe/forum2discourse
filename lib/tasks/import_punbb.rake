@@ -1,13 +1,13 @@
 namespace :forum2discourse do
   desc "Import from PunBB to Discourse Posts and Topics"
-  task :import_punbb => :environment do |t, connection_string|
-    if connection_string.blank?
+  task :import_punbb => :environment do
+    if ENV['F2D_CONNECTION_STRING'].blank?
       puts "You must specify a connection string"
-      puts " i.e.: bundle exec rake forum2discourse:import_punbb mysql://root@host-ip:3308/database"
+      puts " i.e.: export F2D_CONNECTION_STRING=mysql://root@host-ip:3308/database"
       exit
     end
     # 'mysql://root@127.0.0.1:3306/bytemark_punbb
-    exporter = Forum2Discourse::Exporter.create(:punbb, connection_string: connection_string)
+    exporter = Forum2Discourse::Exporter.create(:punbb, connection_string: ENV['F2D_CONNECTION_STRING'])
     puts "Importing #{exporter.topics.size} topics"
     # Override some settings to permit import
     originals = set_original_settings
