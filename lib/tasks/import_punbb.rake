@@ -36,7 +36,7 @@ def import_topic_posts(discourse_topic, posts)
   puts "  Imported #{posts.size} posts"
 end
 
-def set_originals
+def set_original_settings
   {
     max_word_length: SiteSetting.max_word_length,
     title_min_entropy: SiteSetting.title_min_entropy,
