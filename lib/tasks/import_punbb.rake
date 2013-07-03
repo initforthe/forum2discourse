@@ -7,7 +7,7 @@ namespace :forum2discourse do
     originals = {
       max_word_length: SiteSetting.max_word_length,
       title_min_entropy: SiteSetting.title_min_entropy,
-      min_topic_title_length: SiteSetting.min_topic_title_length
+      min_topic_title_length: SiteSetting.min_topic_title_length,
       allow_duplicate_topic_titles: SiteSetting.allow_duplicate_topic_titles?
     }
     SiteSetting.min_topic_title_length = 1
