@@ -15,10 +15,15 @@ class Forum2Discourse::Models::PunBB::Post
   belongs_to :user, 'Forum2Discourse::Models::PunBB::User', child_key: [ :poster_id ]
 
   def to_discourse
+    duser = if user
+                  user
+                else
+                  Forum2Discourse::Models::Discourse::User.new({username: poster, email: poster_email, name: poster})
+
     Forum2Discourse::Models::Discourse::Post.new({
       title: '',
       category: topic.forum.forum_name,
-      user: user.to_discourse,
+      user: duser.to_discourse,
       raw: message,
       created_at: posted
     })
