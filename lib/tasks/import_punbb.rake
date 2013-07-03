@@ -23,8 +23,17 @@ def import_topics(topics)
       end
       found_categories << topic.category
     end
-    TopicCreator.new(u, g, topic.serialize).create
+    discourse_topic = TopicCreator.new(u, g, topic.serialize).create
+    import_topic_posts(discourse_topic, topic.posts)
   end
+end
+
+def import_topic_posts(discourse_topic, posts)
+  posts.each do |post|
+    data = post.serialize.merge({topic_id: discourse_topic.id})
+    PostCreator.new(discourse_topic.user, data).create
+  end
+  puts "  Imported #{posts.size} posts"
 end
 
 def set_originals
