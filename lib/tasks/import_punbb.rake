@@ -21,7 +21,7 @@ def import_topics(topics)
   topics.each do |topic|
     next if topic.title.blank?
     puts "Importing '#{topic.title}'"
-    u = User.admins.first
+    u = User.create(topic.posts.first.user)
     g = Guardian.new(u)
     unless found_categories.include? topic.category
       Category.find_or_create_by_name(topic.category) do |c| # Create category if not exists first.
@@ -36,8 +36,9 @@ end
 
 def import_topic_posts(discourse_topic, posts)
   posts.each do |post|
+    user = User.create_with(post.user.serialize).find_or_create_by_username(post.user.username)
     data = post.serialize.merge({topic_id: discourse_topic.id})
-    PostCreator.new(discourse_topic.user, data).create
+    PostCreator.new(user, data).create
   end
   puts "  Imported #{posts.size} posts"
 end

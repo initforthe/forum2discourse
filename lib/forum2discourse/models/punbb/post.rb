@@ -12,11 +12,13 @@ class Forum2Discourse::Models::PunBB::Post
   property :topic_id,   Integer
 
   belongs_to :topic, 'Forum2Discourse::Models::PunBB::Topic'
+  belongs_to :poster, 'Forum2Discourse::Models::PunBB::User'
 
   def to_discourse
     Forum2Discourse::Models::Discourse::Post.new({
       title: '',
       category: topic.forum.forum_name,
+      user: poster.to_discourse,
       raw: message,
       created_at: posted
     })
