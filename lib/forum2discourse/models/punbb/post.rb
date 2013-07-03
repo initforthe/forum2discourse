@@ -16,9 +16,10 @@ class Forum2Discourse::Models::PunBB::Post
 
   def to_discourse
     duser = if user
-                  user
-                else
-                  Forum2Discourse::Models::Discourse::User.new({username: poster, email: poster_email, name: poster})
+              user
+            else
+              Forum2Discourse::Models::Discourse::User.new({username: poster, email: poster_email, name: poster})
+            end
 
     Forum2Discourse::Models::Discourse::Post.new({
       title: '',
