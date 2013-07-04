@@ -19,6 +19,12 @@ class Forum2Discourse::Models::Discourse::Topic < Forum2Discourse::Models::Disco
     super
   end
 
+  def valid?
+    !topic.title.nil? &&
+      !topic.title.empty? &&
+      !topic.posts.first.nil?
+  end
+
   def serialize
     super.tap { |s| s.delete(:posts) }
   end
