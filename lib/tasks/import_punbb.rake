@@ -61,9 +61,6 @@ end
 
 # Certain settings we need to override for the importer are hardcoded.
 def perform_monkey_patching
-  class << User
-    def self.username_length; 3..65535; end
-  end
   class << RateLimiter
     def disabled?; true; end
   end
