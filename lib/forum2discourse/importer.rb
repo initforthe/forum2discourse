@@ -11,7 +11,7 @@ class Forum2Discourse::Importer
   def import
     with_permissive_settings do
       log "Importing #{@topics.size} topics"
-      topics.each do |topic|
+      @topics.each do |topic|
         import_topic(topic) if topic.valid?
       end
     end
