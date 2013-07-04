@@ -51,10 +51,21 @@ def set_original_settings
     min_topic_title_length: SiteSetting.min_topic_title_length,
     allow_duplicate_topic_titles: SiteSetting.allow_duplicate_topic_titles?
   }.tap do |_|
+    perform_monkey_patching
     SiteSetting.min_topic_title_length = 1
     SiteSetting.title_min_entropy = 0
     SiteSetting.max_word_length = 65535
     SiteSetting.allow_duplicate_topic_titles = true
+  end
+end
+
+# Certain settings we need to override for the importer are hardcoded.
+def perform_monkey_patching
+  class << User
+    def self.username_length; 3..65535; end
+  end
+  class << RateLimiter
+    def disabled?; true; end
   end
 end
 
