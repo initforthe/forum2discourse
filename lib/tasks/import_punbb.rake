@@ -19,11 +19,15 @@ end
 def import_topics(topics)
   found_categories = []
   topics.each do |topic|
+    # Skip topics without a title
     next if topic.title.blank?
+    # Skip topics without a post
+    next if topic.posts.first.nil?
     puts "Importing '#{topic.title}'"
     user_data = topic.posts.first.user
     u = User.create_with(user_data.serialize).find_or_create_by_username(user_data.serialize[:username])
     if !u.persisted?
+      puts "  Could not resolve account, using anonymous user"
       anon = Forum2Discourse::Models::Discourse::User.anonymous
       u = User.create_with(anon.serialize).find_or_create_by_username(anon.username)
     end
