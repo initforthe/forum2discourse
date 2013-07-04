@@ -11,6 +11,7 @@ module TestDatabase
     execute_queries_from(forums_sql)
     execute_queries_from(posts_sql)
     execute_queries_from(topics_sql)
+    execute_queries_from(users_sql)
   end
 
   def self.execute_queries_from(sql)
@@ -37,5 +38,9 @@ module TestDatabase
 
   def self.topics_sql
     File.open("#{RSPEC_ROOT}/test_data/topics.sql", 'r') { |f| f.read }
+  end
+
+  def self.users_sql
+    File.open("#{RSPEC_ROOT}/test_data/users.sql", 'r') { |f| f.read }
   end
 end
