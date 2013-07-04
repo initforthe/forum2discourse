@@ -16,6 +16,16 @@ namespace :forum2discourse do
   end
 end
 
+def user_or_anonymous(user_data)
+  u = User.create_with(user_data.serialize).find_or_create_by_username(user_data.serialize[:username])
+  if !u.persisted?
+    puts "  Could not resolve account, using anonymous user"
+    anon = Forum2Discourse::Models::Discourse::User.anonymous
+    u = User.create_with(anon.serialize).find_or_create_by_username(anon.username)
+  end
+  u
+end
+
 def import_topics(topics)
   found_categories = []
   topics.each do |topic|
@@ -24,13 +34,7 @@ def import_topics(topics)
     # Skip topics without a post
     next if topic.posts.first.nil?
     puts "Importing '#{topic.title}'"
-    user_data = topic.posts.first.user
-    u = User.create_with(user_data.serialize).find_or_create_by_username(user_data.serialize[:username])
-    if !u.persisted?
-      puts "  Could not resolve account, using anonymous user"
-      anon = Forum2Discourse::Models::Discourse::User.anonymous
-      u = User.create_with(anon.serialize).find_or_create_by_username(anon.username)
-    end
+    u = user_or_anonymous(topic.posts.first.user)
     g = Guardian.new(u)
     unless found_categories.include? topic.category
       Category.find_or_create_by_name(topic.category) do |c| # Create category if not exists first.
@@ -45,7 +49,7 @@ end
 
 def import_topic_posts(discourse_topic, posts)
   posts.each do |post|
-    user = User.create_with(post.user.serialize).find_or_create_by_username(post.user.serialize[:username])
+    user = user_or_anonymous(post.user)
     data = post.serialize.merge({topic_id: discourse_topic.id})
     PostCreator.new(user, data).create
   end
