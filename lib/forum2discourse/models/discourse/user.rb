@@ -8,6 +8,9 @@ class Forum2Discourse::Models::Discourse::User < Forum2Discourse::Models::Discou
         puts "Truncating username '#{data[:username]}' as >15 characters"
         data[:username] = data[:username][0..14]
       end
+      if data[:email].blank?
+        data[:email] = "anonymous_user@example.com"
+      end
     end
   end
 end

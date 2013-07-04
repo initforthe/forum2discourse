@@ -14,15 +14,11 @@ class Forum2Discourse::Models::PunBB::Post
   belongs_to :topic, 'Forum2Discourse::Models::PunBB::Topic'
   belongs_to :user, 'Forum2Discourse::Models::PunBB::User', child_key: [ :poster_id ]
 
-  def assumed_email
-    poster_email.blank? ? 'user@example.com' : poster_email
-  end
-
   def to_discourse
     duser = if user
               user.to_discourse
             else
-              Forum2Discourse::Models::Discourse::User.new({username: poster, email: assumed_email, name: poster})
+              Forum2Discourse::Models::Discourse::User.new({username: poster, email: poster_email, name: poster})
             end
 
     Forum2Discourse::Models::Discourse::Post.new({

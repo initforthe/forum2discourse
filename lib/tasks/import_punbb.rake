@@ -23,6 +23,7 @@ def import_topics(topics)
     puts "Importing '#{topic.title}'"
     user_data = topic.posts.first.user
     u = User.create_with(user_data.serialize).find_or_create_by_username(user_data.serialize[:username])
+    binding.pry unless u.persisted?
     g = Guardian.new(u)
     unless found_categories.include? topic.category
       Category.find_or_create_by_name(topic.category) do |c| # Create category if not exists first.
