@@ -5,6 +5,13 @@ class Forum2Discourse::Models::Discourse::User < Forum2Discourse::Models::Discou
   end
   attr_accessor :username, :email, :name
 
+  def valid?
+    !username.nil? &&
+      !email.nil? &&
+      !username.empty? &&
+      !email.empty?
+  end
+
   # Discourse has a username limit of 15 characters.
   def serialize
     super.tap do |data|

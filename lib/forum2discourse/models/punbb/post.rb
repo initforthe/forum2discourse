@@ -20,6 +20,8 @@ class Forum2Discourse::Models::PunBB::Post
             else
               Forum2Discourse::Models::Discourse::User.new({username: poster, email: poster_email, name: poster})
             end
+    
+    duser = duser.valid? ? duser : Forum2Discourse::Models::Discourse::User.anonymous
 
     Forum2Discourse::Models::Discourse::Post.new({
       title: '',
