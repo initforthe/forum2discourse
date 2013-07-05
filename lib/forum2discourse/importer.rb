@@ -51,7 +51,12 @@ class Forum2Discourse::Importer
 
   def discourse_user(user)
     u = User.create_with(user.serialize).find_or_create_by_username(user.serialize[:username])
-    u.persisted? ? u : self.class.anonymous
+    if u.persisted?
+      user
+    else
+      anon = Forum2Discourse::Models::Discourse::User.anonymous.serialize
+      User.create_with(anon).find_or_create_by_username(anon[:username])
+    end
   end
 
   # Certain settings we need to override for the importer are hardcoded.
