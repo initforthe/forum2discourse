@@ -36,6 +36,7 @@ describe Forum2Discourse::Exporters::PunBB do
 
     let(:first_topic) { exporter.topics(order: [:id.asc]).first }
     let(:second_topic) { exporter.topics(order: [:id.asc], offset: 1, limit: 1).first }
+    let(:faked_user) { Forum2Discourse::Models::Discourse::User.new(username: 'Peter Stringfel', name: 'Peter Stringfellow', email: 'Peter Stringfellow.no.email@example.com.invalid') } 
 
     it 'returns an Array of Forum2Discourse::Models::Discourse::Topic' do
       expect(exporter.topics).to be_kind_of(Array)
@@ -70,8 +71,8 @@ describe Forum2Discourse::Exporters::PunBB do
       expect(first_topic.posts.first.user.serialize).to eq(test_user.serialize)
     end
 
-    it 'provides an anonymous user if no corresponding user was found' do
-      expect(second_topic.posts.first.user.serialize).to eq(Forum2Discourse::Models::Discourse::User.anonymous.serialize) 
+    it 'provides an approximation of a user if no corresponding user was found' do
+      expect(second_topic.posts.first.user.serialize).to eq(faked_user.serialize) 
     end
   end
 end

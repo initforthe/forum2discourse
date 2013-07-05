@@ -18,7 +18,8 @@ class Forum2Discourse::Models::PunBB::Post
     duser = if user
               user.to_discourse
             else
-              Forum2Discourse::Models::Discourse::User.new({username: poster, email: poster_email, name: poster})
+              email = (poster_email.nil? || poster_email.empty?) ? "#{poster}.no.email@example.com.invalid" : poster_email
+              Forum2Discourse::Models::Discourse::User.new({username: poster, email: email, name: poster})
             end
     
     duser = duser.valid? ? duser : Forum2Discourse::Models::Discourse::User.anonymous
