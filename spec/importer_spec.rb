@@ -15,7 +15,7 @@ describe Forum2Discourse::Importer do
     class TopicCreator; def initialize(u,g,t); self; end; end unless defined? TopicCreator
     class RateLimiter; end unless defined? RateLimiter
     class User; end unless defined? User
-    class Guardian; def initialize(user); @user = user; end; end unless defined? Guardian
+    class Guardian; def initialize(user); @user = user; self; end; end unless defined? Guardian
     class Category; end unless defined? Category
   end
 
@@ -63,12 +63,14 @@ describe Forum2Discourse::Importer do
       end
       # Stub the various AR methods used internally by the importer
       User.stub(:create_with).and_return(User)
-      User.stub(:find_or_create_by_username).and_return(FakeARObject.new)
       Category.stub(:create_with).and_return(Category)
-      Category.stub(:find_or_create_by_name).and_return(FakeARObject.new)
+      User.stub(:find_or_create_by_username).and_return(fake_ar)
+      Category.stub(:find_or_create_by_name).and_return(fake_ar)
     end
+
     let(:importer) { Forum2Discourse::Importer.new([topic]) }
-    let(:guardian) { Guardian.new(user) }
+    let!(:guardian) { Guardian.new(user) }
+    let!(:fake_ar) { FakeARObject.new }
 
     it "creates a TopicCreator with the correct options" do
       # Make sure guardian is 'singleton-esque'
@@ -78,7 +80,7 @@ describe Forum2Discourse::Importer do
       TopicCreator.any_instance.stub(:create)
       Forum2Discourse::Importer.any_instance.stub(:import_topic_posts).and_return(:true)
       # Check TopicCreator receives the correct arguments.
-      TopicCreator.should_receive(:new).with(user, guardian, topic.serialize).and_call_original
+      TopicCreator.should_receive(:new).with(fake_ar, guardian, topic.serialize).and_call_original
       # Now trigger off our import
       importer.import
     end
