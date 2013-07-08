@@ -4,8 +4,9 @@ class Forum2Discourse::Importer
     @categories = []
   end
 
+  # XXX consider reimplementing this as a Logger
   def log(message)
-    puts message unless ENV['F2C_LOG_LEVEL'].to_i < 1
+    puts message if ENV['F2C_LOG_LEVEL'].nil? || ENV['F2C_LOG_LEVEL'].to_i > 0
   end
 
   def import
@@ -52,7 +53,7 @@ class Forum2Discourse::Importer
   def discourse_user(user)
     u = User.create_with(user.serialize).find_or_create_by_username(user.serialize[:username])
     if u.persisted?
-      user
+      u
     else
       anon = Forum2Discourse::Models::Discourse::User.anonymous.serialize
       User.create_with(anon).find_or_create_by_username(anon[:username])

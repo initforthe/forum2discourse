@@ -16,7 +16,7 @@ class Forum2Discourse::Models::Discourse::User < Forum2Discourse::Models::Discou
   def serialize
     super.tap do |data|
       if data[:username].length > 15
-        puts "Truncating username '#{data[:username]}' as >15 characters"
+        puts "Truncating username '#{data[:username]}' as >15 characters" 
         data[:username] = data[:username][0..14]
       end
     end
