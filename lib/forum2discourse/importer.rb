@@ -5,7 +5,7 @@ class Forum2Discourse::Importer
   end
 
   def log(message)
-    puts message
+    puts message unless ENV['F2C_LOG_LEVEL'].to_i < 1
   end
 
   def import
