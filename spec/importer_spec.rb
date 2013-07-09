@@ -17,6 +17,7 @@ describe Forum2Discourse::Importer do
     class User; end unless defined? User
     class Guardian; def initialize(user); @user = user; self; end; end unless defined? Guardian
     class Category; end unless defined? Category
+    class PostCreator; def initialize(u, p); end; end unless defined? PostCreator
   end
 
   let(:user) { Forum2Discourse::Models::Discourse::User.anonymous }
@@ -28,12 +29,14 @@ describe Forum2Discourse::Importer do
     )
   end
 
+  let(:posts) { [post] }
+
   let(:topic) do
     Forum2Discourse::Models::Discourse::Topic.new(
       title: 'A test discourse topic',
       category: 'Test category',
       user_id: 1,
-      posts: [post]
+      posts: posts
     )
   end
 
@@ -56,7 +59,7 @@ describe Forum2Discourse::Importer do
     end
   end
 
-  describe "#import_topic" do
+  context "with mocked out rails models" do
     before do
       class FakeARObject
         def persisted?; true; end
@@ -66,43 +69,39 @@ describe Forum2Discourse::Importer do
       Category.stub(:create_with).and_return(Category)
       User.stub(:find_or_create_by_username).and_return(fake_ar)
       Category.stub(:find_or_create_by_name).and_return(fake_ar)
+      TopicCreator.any_instance.stub(:create)
+      Guardian.stub(:new).and_return(guardian)
     end
 
     let(:importer) { Forum2Discourse::Importer.new([topic]) }
     let!(:guardian) { Guardian.new(user) }
     let!(:fake_ar) { FakeARObject.new }
 
-    it "creates a TopicCreator with the correct options" do
-      # Make sure guardian is 'singleton-esque'
-      Guardian.stub(:new).and_return(guardian)
-      # Stub away methods we don't care about, we're only testing TopicCreator
-      # recieves the correct options for a post here.
-      TopicCreator.any_instance.stub(:create)
-      Forum2Discourse::Importer.any_instance.stub(:import_topic_posts).and_return(:true)
-      # Check TopicCreator receives the correct arguments.
-      TopicCreator.should_receive(:new).with(fake_ar, guardian, topic.serialize).and_call_original
-      # Now trigger off our import
-      importer.import
+    describe "#import_topic" do
+      it "creates a TopicCreator with the correct options" do
+        # Make sure guardian is 'singleton-esque'
+        # Stub away methods we don't care about, we're only testing TopicCreator
+        # recieves the correct options for a post here.
+        Forum2Discourse::Importer.any_instance.stub(:import_topic_posts).and_return(:true)
+        # Check TopicCreator receives the correct arguments.
+        TopicCreator.should_receive(:new).with(fake_ar, guardian, topic.serialize).and_call_original
+        # Now trigger off our import
+        importer.import
+      end
+
+      it "calls import_topic_posts to import the posts for the topic" do
+        importer.should_receive(:import_topic_posts).with(nil, posts)
+        importer.import
+      end
     end
 
-    it "calls import_topic_posts to import the posts for the topic" do
-      pending
-    end
-  end
-
-  describe "#find_or_create_category" do
-    it "returns a category that already exists" do
-      pending
-    end
-
-    it "creates a category if it does not already exist" do
-      pending
-    end
-  end
-
-  describe "#import_topic_posts" do
-    it "calls PostCreator for each post" do
-      pending
+    describe "#import_topic_posts" do
+      it "calls PostCreator for each post" do
+        TopicCreator.any_instance.stub(:create).and_return(OpenStruct.new(id: 4))
+        PostCreator.should_receive(:new).with(fake_ar, post.serialize.merge({topic_id: 4})).and_call_original
+        PostCreator.any_instance.should_receive(:create)
+        importer.import
+      end
     end
   end
 end
