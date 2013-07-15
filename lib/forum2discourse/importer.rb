@@ -72,6 +72,8 @@ class Forum2Discourse::Importer
     SiteSetting.min_topic_title_length = originals[:min_topic_title_length]
     SiteSetting.title_min_entropy = originals[:title_min_entropy]
     SiteSetting.allow_duplicate_topic_titles = originals[:allow_duplicate_topic_titles]
+    SiteSetting.newuser_spam_host_threshold = originals[:newuser_spam_host_threshold]
+    SiteSetting.newuser_max_links = originals[:newuser_max_links]
   end
 
   def set_original_settings
@@ -79,12 +81,16 @@ class Forum2Discourse::Importer
       max_word_length: SiteSetting.max_word_length,
       title_min_entropy: SiteSetting.title_min_entropy,
       min_topic_title_length: SiteSetting.min_topic_title_length,
+      newuser_spam_host_threshold: SiteSetting.newuser_spam_host_threshold,
+      newuser_max_links: SiteSetting.newuser_max_links,
       allow_duplicate_topic_titles: SiteSetting.allow_duplicate_topic_titles?
     }.tap do |_|
       perform_monkey_patching
       SiteSetting.min_topic_title_length = 1
       SiteSetting.title_min_entropy = nil
       SiteSetting.max_word_length = 65535
+      SiteSetting.newuser_spam_host_threshold = 65535
+      SiteSetting.newuser_max_links = 65535
       SiteSetting.allow_duplicate_topic_titles = true
     end
   end
