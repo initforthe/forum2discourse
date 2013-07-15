@@ -90,7 +90,7 @@ class Forum2Discourse::Importer
 
   def reset_settings_to(originals)
     PERMISSIVE_SETTINGS.each do |setting, _|
-      SiteSetting.send("#{setting}", originals[setting])
+      SiteSetting.send("#{setting}=", originals[setting])
     end
   end
 
