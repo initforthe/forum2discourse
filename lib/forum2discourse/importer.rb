@@ -1,3 +1,9 @@
+TextSentinel
+class TextSentinel
+  def seems_quiet?; true; end
+  def seems_pronounceable?; true; end
+end
+
 class Forum2Discourse::Importer
   def initialize(topics)
     @topics = topics
@@ -67,31 +73,35 @@ class Forum2Discourse::Importer
     end
   end
 
+  PERMISSIVE_SETTINGS = {
+    min_topic_title_length: 1,
+    title_min_entropy: nil,
+    body_min_entropy: nil,
+    max_word_length: 65535,
+    newuser_spam_host_threshold: 65535,
+    newuser_max_links: 65535,
+    newuser_max_images: 65535,
+    newuser_max_mentions_per_post: 65535,
+    max_mentions_per_post: 65535,
+    min_post_length: 1,
+    unique_posts_mins: 0,
+    allow_duplicate_topic_titles: true
+  }
+
   def reset_settings_to(originals)
-    SiteSetting.max_word_length = originals[:max_word_length]
-    SiteSetting.min_topic_title_length = originals[:min_topic_title_length]
-    SiteSetting.title_min_entropy = originals[:title_min_entropy]
-    SiteSetting.allow_duplicate_topic_titles = originals[:allow_duplicate_topic_titles]
-    SiteSetting.newuser_spam_host_threshold = originals[:newuser_spam_host_threshold]
-    SiteSetting.newuser_max_links = originals[:newuser_max_links]
+    PERMISSIVE_SETTINGS.each do |setting, _|
+      SiteSetting.send("#{setting}", originals[setting])
+    end
   end
 
   def set_original_settings
-    {
-      max_word_length: SiteSetting.max_word_length,
-      title_min_entropy: SiteSetting.title_min_entropy,
-      min_topic_title_length: SiteSetting.min_topic_title_length,
-      newuser_spam_host_threshold: SiteSetting.newuser_spam_host_threshold,
-      newuser_max_links: SiteSetting.newuser_max_links,
-      allow_duplicate_topic_titles: SiteSetting.allow_duplicate_topic_titles?
-    }.tap do |_|
+    originals = {}
+    {}.tap do |originals|
       perform_monkey_patching
-      SiteSetting.min_topic_title_length = 1
-      SiteSetting.title_min_entropy = nil
-      SiteSetting.max_word_length = 65535
-      SiteSetting.newuser_spam_host_threshold = 65535
-      SiteSetting.newuser_max_links = 65535
-      SiteSetting.allow_duplicate_topic_titles = true
+      PERMISSIVE_SETTINGS.each do |setting, value|
+        originals[setting] = SiteSetting.send(setting)
+        SiteSetting.send("#{setting}=", value)
+      end
     end
   end
 end

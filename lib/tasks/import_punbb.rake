@@ -1,8 +1,7 @@
-require 'forum2discourse/importer'
-
 namespace :forum2discourse do
   desc "Import from PunBB to Discourse Posts and Topics"
   task :import_punbb => :environment do
+    require 'forum2discourse/importer'
     if ENV['F2D_CONNECTION_STRING'].blank?
       puts "You must specify a connection string"
       puts " i.e.: export F2D_CONNECTION_STRING=mysql://root@host-ip:3308/database"
