@@ -17,7 +17,7 @@ class Forum2Discourse::Models::Vanilla::Discussion
       title: subject,
       created_at: created_at,
       category: category.name,
-      posts: posts.map(&:to_discourse)
+      posts: comments.map(&:to_discourse)
     })
   end
 end
