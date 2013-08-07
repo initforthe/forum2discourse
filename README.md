@@ -25,9 +25,7 @@ $ RAILS_ENV-production bundle exec rake forum2discourse:import_punbb
 NOTES
 -----
 
-In order for people to be able to use their existing user accounts, you will
-need to manually reset each user's password; passwords/authentication methods
-are not included.
+In order for people to be able to use their existing user accounts, you will need to manually reset each user's password; passwords/authentication methods are not included.
 
 EXTENDING
 ---------
@@ -44,8 +42,7 @@ To extend this library for another forum type:
 COPYRIGHT
 ---------
 
-Forum2Discourse is copyright (c) 2013 Initforthe Ltd (www.initforthe.com) and
-Bytemark Hosting (www.bytemark.co.uk).
+Forum2Discourse is copyright (c) 2013 Initforthe Ltd (www.initforthe.com) and Bytemark Hosting (www.bytemark.co.uk).
 
 LICENSE
 -------
