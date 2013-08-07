@@ -12,7 +12,7 @@ USAGE
    (http://datamapper.org/getting-started.html) - for example:
 
 ```shell
-$ export F2D_CONNECTION_STRING-mysql://root@127.0.0.1:3306/database_name
+$ export F2D_CONNECTION_STRING=mysql://root@127.0.0.1:3306/database_name
 ```
 
 3. Run the relevant rake task within bundle exec
