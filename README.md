@@ -36,9 +36,9 @@ To extend this library for another forum type:
 
 1. Create 'lib/tasks/import_(type).rb' by copying existing.
 2. Create 'lib/forum2discourse/models/(type)' to map the columns (see Vanilla models for an example)
-  a. Each should respond to a to_discourse method that returns a
-     Forum2Discourse::Models::Discourse::{Topic|Post|User|Category} instance
-  b. Remember to define the relationships.
+    1. Each should respond to a to_discourse method that returns a
+       Forum2Discourse::Models::Discourse::{Topic|Post|User|Category} instance
+    2. Remember to define the relationships.
 3. Create an exporter in 'lib/forum2discourse/exporters'.
 
 COPYRIGHT
