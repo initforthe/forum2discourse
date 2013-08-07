@@ -18,8 +18,8 @@ $ export F2D_CONNECTION_STRING-mysql://root@127.0.0.1:3306/database_name
 3. Run the relevant rake task within bundle exec
 
 ```shell
-$ RAILS_ENV-production bundle exec rake forum2discourse:import_vanilla
-$ RAILS_ENV-production bundle exec rake forum2discourse:import_punbb
+$ RAILS_ENV=production bundle exec rake forum2discourse:import_vanilla
+$ RAILS_ENV=production bundle exec rake forum2discourse:import_punbb
 ```
 
 NOTES
