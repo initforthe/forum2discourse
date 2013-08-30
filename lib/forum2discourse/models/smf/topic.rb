@@ -5,6 +5,7 @@ class Forum2Discourse::Models::SMF::Topic
 
   property :id,   Serial, field: 'ID_TOPIC'
   property :board_id, Integer, field: 'ID_BOARD'
+  property :views,  Integer,    field: 'numViews'
   #property :user_id, Integer, field: 'ID_MEMBER_STARTED'
 
   has n, :messages, 'Forum2Discourse::Models::SMF::Message'
@@ -21,7 +22,8 @@ class Forum2Discourse::Models::SMF::Topic
       posts: messages.map(&:to_discourse),
       title: subject,
       created_at: first_post_created_at,
-      updated_at: last_post_created_at
+      updated_at: last_post_created_at,
+      views: views
     })
   end
 end
