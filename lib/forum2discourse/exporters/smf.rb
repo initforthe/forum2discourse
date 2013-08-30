@@ -9,7 +9,7 @@ module Forum2Discourse::Exporters
     end
 
     def topics(args={})
-      @topics ||= convert(Forum2Discourse::Models::SMF::Message.all(args))
+      @topics ||= convert(Forum2Discourse::Models::SMF::Topic.all(args))
     end
 
     private
