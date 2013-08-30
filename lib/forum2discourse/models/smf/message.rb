@@ -23,7 +23,7 @@ class Forum2Discourse::Models::SMF::Message
       title: subject,
       category: topic.board.subject,
       user: duser,
-      raw: HTMLEntities.new.decode(body).gsub("[code]","````").gsub("[/code]","````"),
+      raw: HTMLEntities.new.decode(body).gsub("[code]","\n````\n").gsub("[/code]","\n````\n").gsub("<br/>","").gsub("<br />",""),
       created_at: created_at
     )
   end
