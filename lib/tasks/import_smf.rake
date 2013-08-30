@@ -9,6 +9,10 @@ namespace :forum2discourse do
     end
     # 'mysql://root@127.0.0.1:3306/bytemark_punbb
     exporter = Forum2Discourse::Exporter.create(:smf, connection_string: ENV['F2D_CONNECTION_STRING'])
-    Forum2Discourse::Importer.new(exporter.topics).import
+    importer Forum2Discourse::Importer.new()
+    topic = exporter.firstTopic
+    while topic
+        importer.import_topic(topic)
+        topic = topic.next
   end
 end

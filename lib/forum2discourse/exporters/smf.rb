@@ -17,5 +17,9 @@ module Forum2Discourse::Exporters
     def convert(collection)
       collection.map(&:to_discourse).compact
     end
+    
+    def firstTopic(args={})
+        Forum2Discourse::Models::SMF::Topic.first
+    end
   end
 end
