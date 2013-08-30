@@ -17,5 +17,7 @@ namespace :forum2discourse do
     while topic
         importer.import_topic(topic)
         topic = topic.next
+    end
   end
 end
+
