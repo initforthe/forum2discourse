@@ -13,10 +13,10 @@ namespace :forum2discourse do
     puts "creating importer"
     importer = Forum2Discourse::Importer.new()
     puts "getting first topic"
-    topic = exporter.firstTopic
+    topic = exporter.firstTopic.to_discourse
     while topic
         importer.import_topic(topic)
-        topic = topic.next
+        topic = topic.next.to_discourse
     end
   end
 end
