@@ -1,6 +1,6 @@
 class Forum2Discourse::Models::Discourse::Topic < Forum2Discourse::Models::Discourse::Base
   # Standard attrs
-  attr_accessor :title, :category :views
+  attr_accessor :title, :category, :views
 
   # User attrs
   attr_accessor :user_id, :last_post_user_id
