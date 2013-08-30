@@ -8,7 +8,14 @@ namespace :forum2discourse do
       exit
     end
     # 'mysql://root@127.0.0.1:3306/bytemark_punbb
+    puts "creating exporter"
     exporter = Forum2Discourse::Exporter.create(:smf, connection_string: ENV['F2D_CONNECTION_STRING'])
-    Forum2Discourse::Importer.new(exporter.topics).import
+    puts "creating importer"
+    importer Forum2Discourse::Importer.new()
+    puts "getting first topic"
+    topic = exporter.firstTopic
+    while topic
+        importer.import_topic(topic)
+        topic = topic.next
   end
 end
