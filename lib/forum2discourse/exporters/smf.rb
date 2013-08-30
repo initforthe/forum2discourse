@@ -11,15 +11,15 @@ module Forum2Discourse::Exporters
     def topics(args={})
       @topics ||= convert(Forum2Discourse::Models::SMF::Topic.all(args))
     end
+    
+    def firstTopic(args={})
+        Forum2Discourse::Models::SMF::Topic.first
+    end
 
     private
 
     def convert(collection)
       collection.map(&:to_discourse).compact
-    end
-    
-    def firstTopic(args={})
-        Forum2Discourse::Models::SMF::Topic.first
     end
   end
 end
