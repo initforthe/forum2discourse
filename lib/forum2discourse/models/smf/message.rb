@@ -1,4 +1,4 @@
-require 'cgi'
+require 'htmlentities'
 class Forum2Discourse::Models::SMF::Message
   include DataMapper::Resource
 
@@ -23,7 +23,7 @@ class Forum2Discourse::Models::SMF::Message
       title: subject,
       category: topic.board.subject,
       user: duser,
-      raw: CGI.unescapeHTML(body).gsub("[code]","````").gsub("[/code]","````"),
+      raw: HTMLEntities.new.decode(body).gsub("[code]","````").gsub("[/code]","````"),
       created_at: created_at
     )
   end
