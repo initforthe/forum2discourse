@@ -66,6 +66,7 @@ GEM
     simplecov-html (0.7.1)
     stringex (1.5.1)
     uuidtools (2.1.4)
+    htmlentities (~>4.3.0)
 
 PLATFORMS
   ruby
