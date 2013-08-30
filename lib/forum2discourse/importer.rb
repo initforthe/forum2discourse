@@ -33,10 +33,10 @@ class Forum2Discourse::Importer
         discourse_topic = TopicCreator.new(user, guardian, topic.serialize).create
         import_topic_posts(discourse_topic, topic.posts)
       end
-      #rescue
-      #  puts "FAILED TO IMPORT TOPIC #{topic.title}"
-      #  puts "Error: #{$!.message}"
-      #  puts $!.backtrace.join("\n")
+      rescue
+        puts "FAILED TO IMPORT TOPIC #{topic.title}"
+        puts "Error: #{$!.message}"
+        puts $!.backtrace.join("\n")
   end
 
   def find_or_create_category(user, category)
