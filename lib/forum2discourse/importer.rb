@@ -5,7 +5,7 @@ class TextSentinel
 end
 
 class Forum2Discourse::Importer
-  def initialize(topics)
+  def initialize(topics=[])
     @topics = topics
     @categories = []
   end
