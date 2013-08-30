@@ -7,12 +7,14 @@ class Forum2Discourse::Models::SMF::User
   property :username, String, field: "memberName"
   property :email,      String, field: "emailAddress"
   property :realName,  String, field: "realName"
+  property :created_at, EpochTime, field: "dateRegistered"
 
   def to_discourse
     Forum2Discourse::Models::Discourse::User.new(
       username: username,
       email: email,
-      name: realName
+      name: realName,
+      created_at: created_at
     )
   end
 end
