@@ -16,7 +16,7 @@ module Forum2Discourse::Exporters
         Forum2Discourse::Models::SMF::Topic.first
     end
     
-    def topicSlice(offset,chunk)
+    def topicsSlice(offset,chunk)
         Forum2Discourse::Models::SMF::Topic.slice(offset,chunk)
     end
 
