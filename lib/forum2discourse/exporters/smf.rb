@@ -15,6 +15,10 @@ module Forum2Discourse::Exporters
     def firstTopic(args={})
         Forum2Discourse::Models::SMF::Topic.first
     end
+    
+    def topicSlice(offset,chunk)
+        Forum2Discourse::Models::SMF::Topic.slice(offset,chunk)
+    end
 
     private
 

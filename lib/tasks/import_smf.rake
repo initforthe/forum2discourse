@@ -12,11 +12,11 @@ namespace :forum2discourse do
     exporter = Forum2Discourse::Exporter.create(:smf, connection_string: ENV['F2D_CONNECTION_STRING'])
     puts "creating importer"
     importer = Forum2Discourse::Importer.new()
-    puts "getting first topic"
-    topic = exporter.firstTopic.to_discourse
-    while topic
-        importer.import_topic(topic)
-        topic = topic.next.to_discourse
+    while topics = exporter.topicsSlice(offset, 1) do
+      topics.each do |topic|
+        importer.import_topic(topic.to_discourse)
+      end
+      offset += 1
     end
   end
 end
