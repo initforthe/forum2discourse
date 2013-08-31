@@ -16,7 +16,7 @@ namespace :forum2discourse do
     offset=0
     
     if File.exists?("next_offset")
-         File.open("next_offset", 'r') {|f| offset = f.read[0].to_i }
+         File.open("next_offset", 'r') {|f| offset = f.read.to_i }
          puts "continuing from #{offset}"
     end
     
@@ -30,7 +30,7 @@ namespace :forum2discourse do
       offset += 1
       elements_processed += 1
       
-      if elements_processed == 100
+      if elements_processed == 200
         File.open("next_offset", 'w') {|f| f.write(offset) }
         abort("aborting at #{offset}")
       end 
