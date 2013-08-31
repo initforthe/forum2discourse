@@ -45,6 +45,7 @@ class Forum2Discourse::Importer
         @categories << categoryobj
       else
         @categories << Category.create_with(user: user).find_or_create_by_name(category)
+      end
     end
   end
 
