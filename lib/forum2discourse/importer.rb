@@ -40,9 +40,10 @@ class Forum2Discourse::Importer
   end
 
   def find_or_create_category(user, category)
-    unless @categories.include? category
-      @categories << Category.create_with(user: user).find_or_create_by_name(category)
-    end
+    #unless @categories.include? category
+    #  @categories << Category.create_with(user: user).find_or_create_by_name(category)
+    #end
+    Category.create_with(user: user).find_or_create_by_name(category)
   end
 
   def import_topic_posts(discourse_topic, posts)
