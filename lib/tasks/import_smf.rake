@@ -20,7 +20,15 @@ namespace :forum2discourse do
       end
       topics = nil
       offset += 1
-      GC.start
+      
+      counts = Hash.new{ 0 }
+      ObjectSpace.each_object do |o|
+        counts[o.class] += 1
+      end
+      
+      counts.each_pair do |k,v|
+        puts "#{k}  = #{v}"
+      end
     end
   end
 end
