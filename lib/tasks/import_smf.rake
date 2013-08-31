@@ -16,7 +16,7 @@ namespace :forum2discourse do
     offset=0
     
     if File.exists?("next_offset")
-         File.open("next_offset", 'r') {|f| offset = f.read }
+         File.open("next_offset", 'r') {|f| offset = f.read[0].to i }
          puts "continuing from #{offset}"
     end
     
