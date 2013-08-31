@@ -20,7 +20,7 @@ namespace :forum2discourse do
       end
       topics = nil
       offset += 1
-      CG.start
+      GC.start
     end
   end
 end
