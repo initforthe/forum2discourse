@@ -43,7 +43,8 @@ class Forum2Discourse::Importer
     #unless @categories.include? category
     #  @categories << Category.create_with(user: user).find_or_create_by_name(category)
     #end
-    category = Category.find_or_create_by_name(category)
+    category_obj = Category.find_or_create_by_name(category)
+    category_obj.save
   end
 
   def import_topic_posts(discourse_topic, posts)
