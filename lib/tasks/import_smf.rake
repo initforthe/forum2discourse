@@ -27,7 +27,9 @@ namespace :forum2discourse do
       end
       
       counts.each_pair do |k,v|
-        puts "#{k}  = #{v}"
+        if v>50
+            puts "#{k}  = #{v}"
+        end
       end
     end
   end
