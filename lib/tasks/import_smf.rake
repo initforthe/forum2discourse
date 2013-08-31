@@ -30,7 +30,7 @@ namespace :forum2discourse do
       offset += 1
       elements_processed += 1
       
-      if elements_processed == 100:
+      if elements_processed == 100
         File.open("next_offset", 'w') {|f| f.write(offset) }
         abort("aborting at #{offset}")
       end 
