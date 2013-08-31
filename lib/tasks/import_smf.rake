@@ -16,9 +16,7 @@ namespace :forum2discourse do
     while topics = exporter.topicsSlice(offset, 1) do
       topics.each do |topic|
         importer.import_topic(topic.to_discourse)
-        topic = nil
       end
-      topics = nil
       offset += 1
     end
   end
