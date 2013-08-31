@@ -27,7 +27,7 @@ namespace :forum2discourse do
         counts[o.class] += 1
       end
       
-      puts "String: #{counts["String"]}"
+      puts "String: #{counts[String]}"
     end
   end
 end
