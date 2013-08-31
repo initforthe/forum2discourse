@@ -12,8 +12,15 @@ namespace :forum2discourse do
     exporter = Forum2Discourse::Exporter.create(:smf, connection_string: ENV['F2D_CONNECTION_STRING'])
     puts "creating importer"
     importer = Forum2Discourse::Importer.new()
+    
     offset=0
     
+    if File.exists?("next_offset")
+         File.open("next_offset", 'r') {|f| offset = f.read }
+         puts "continuing from #{offset}"
+    end
+    
+    elements_processed=0
     while topics = exporter.topicsSlice(offset, 1) do
       topics.each do |topic|
         importer.import_topic(topic.to_discourse)
@@ -21,13 +28,13 @@ namespace :forum2discourse do
       end
       topics = nil
       offset += 1
+      elements_processed += 1
       
-      counts = Hash.new{ 0 }
-      ObjectSpace.each_object do |o|
-        counts[o.class] += 1
-      end
+      if elements_processed == 100:
+        File.open("next_offset", 'w') {|f| f.write(offset) }
+        abort("aborting at #{offset}")
+      end 
       
-      puts "String: #{counts[String]}"
     end
   end
 end
