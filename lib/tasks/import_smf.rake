@@ -13,7 +13,7 @@ namespace :forum2discourse do
     puts "creating importer"
     importer = Forum2Discourse::Importer.new()
     offset=0
-    prev_counts=Hash.new{0}
+    
     while topics = exporter.topicsSlice(offset, 1) do
       topics.each do |topic|
         importer.import_topic(topic.to_discourse)
@@ -27,13 +27,7 @@ namespace :forum2discourse do
         counts[o.class] += 1
       end
       
-      counts.each_pair do |k,v|
-        if v>50 and prev_counts[k] and prev_counts[k]<v
-            puts "#{k}  = #{v}, was #{prev_counts[k]}"
-        end
-      end
-      
-      prev_counts = counts
+      puts "String: #{counts["String"]}"
     end
   end
 end
