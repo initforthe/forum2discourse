@@ -41,7 +41,6 @@ class Forum2Discourse::Importer
     unless @categories.include? topic.category
       category = Category.create_with(user: user).find_or_create_by_name(topic.category)
       category.update_attribute(:description, topic.category_desc)
-      puts category.inspect
       @categories << category
     end
   end
