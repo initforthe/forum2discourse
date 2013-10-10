@@ -27,6 +27,7 @@ class Forum2Discourse::Models::PunBB::Topic
       title: subject,
       created_at: posted,
       category: forum.forum_name,
+      category_desc: forum.forum_desc,
       posts: posts.map(&:to_discourse)
     })
   end
