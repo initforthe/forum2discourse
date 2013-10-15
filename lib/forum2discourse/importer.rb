@@ -28,7 +28,7 @@ class Forum2Discourse::Importer
     log "Importing '#{topic.title}'"
     user = discourse_user(topic.posts.first.user)
     guardian = Guardian.new(user)
-    find_or_create_category(user, topic.category)
+    find_or_create_category(user, topic)
     discourse_topic = TopicCreator.new(user, guardian, topic.serialize).create
     import_topic_posts(discourse_topic, topic.posts)
   rescue
@@ -37,9 +37,11 @@ class Forum2Discourse::Importer
     puts $!.backtrace.join("\n")
   end
 
-  def find_or_create_category(user, category)
-    unless @categories.include? category
-      @categories << Category.create_with(user: user).find_or_create_by_name(category)
+  def find_or_create_category(user, topic)
+    unless @categories.include? topic.category
+      category = Category.create_with(user: user).find_or_create_by_name(topic.category)
+      category.update_attribute(:description, topic.category_desc)
+      @categories << category
     end
   end
 
