@@ -6,7 +6,7 @@ class Forum2Discourse::Models::Discourse::Post < Forum2Discourse::Models::Discou
   # Weird attrs
   attr_accessor :meta_data, :archetype
   
-  belongs_to :topic 'Forum2Discourse::Models::Discourse::Topic'
+  belongs_to :topic, 'Forum2Discourse::Models::Discourse::Topic'
 
   def serialize
     super.tap { |s| s.delete(:user) }

@@ -14,7 +14,7 @@ class Forum2Discourse::Models::Discourse::Topic < Forum2Discourse::Models::Disco
   # Relationships
   #attr_accessor :posts
   
-  has n :posts 'Forum2Discourse::Models::Discourse::Post'
+  has n :posts, 'Forum2Discourse::Models::Discourse::Post'
 
   def initialize(attrs)
     @posts = []
