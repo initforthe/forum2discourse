@@ -19,7 +19,7 @@ class Forum2Discourse::Models::SMF::Topic
     last_post_created_at = messages.last==nil ? nil : messages.last.created_at
     Forum2Discourse::Models::Discourse::Topic.new({
       category: board.subject,
-      posts: messages.map(:to_discourse),
+      posts: messages.map(&:to_discourse),
       title: subject,
       created_at: first_post_created_at,
       updated_at: last_post_created_at,
