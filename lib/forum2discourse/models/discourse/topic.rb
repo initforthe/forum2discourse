@@ -12,9 +12,7 @@ class Forum2Discourse::Models::Discourse::Topic < Forum2Discourse::Models::Disco
   attr_accessor :archetype, :subtype, :meta_data
 
   # Relationships
-  #attr_accessor :posts
-  
-  has n :posts, 'Forum2Discourse::Models::Discourse::Post'
+  attr_accessor :posts
 
   def initialize(attrs)
     @posts = []
