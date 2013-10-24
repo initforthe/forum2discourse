@@ -4,7 +4,7 @@ class Forum2Discourse::Models::SMF::Message
 
   storage_names[:default] = "smf_messages"
 
-  property :id,   Integer, field: 'ID_MSG'
+  property :id,   Serial, field: 'ID_MSG'
   property :created_at, EpochTime, field: 'posterTime'
   property :topic_id, Integer, field: 'ID_TOPIC'
   #property :board_id, Integer, field: 'ID_BOARD'
