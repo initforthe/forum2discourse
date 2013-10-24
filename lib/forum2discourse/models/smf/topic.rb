@@ -4,7 +4,7 @@ class Forum2Discourse::Models::SMF::Topic
   storage_names[:default] = "smf_topics"
 
   property :id,   Integer, field: 'ID_TOPIC'
-  #property :board_id, Integer, field: 'ID_BOARD'
+  property :board_id, Integer, field: 'ID_BOARD'
   property :views,  Integer,    field: 'numViews'
   #property :user_id, Integer, field: 'ID_MEMBER_STARTED'
 
