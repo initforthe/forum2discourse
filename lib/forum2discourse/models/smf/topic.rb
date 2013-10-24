@@ -20,7 +20,7 @@ class Forum2Discourse::Models::SMF::Topic
     Forum2Discourse::Models::Discourse::Topic.new({
       category: board.subject,
       posts: messages.map(&:to_discourse),
-      title: subject,
+      title: HTMLEntities.new.decode(subject),
       created_at: first_post_created_at,
       updated_at: last_post_created_at,
       views: views
