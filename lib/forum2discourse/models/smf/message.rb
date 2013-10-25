@@ -15,7 +15,7 @@ class Forum2Discourse::Models::SMF::Message
   belongs_to :topic, 'Forum2Discourse::Models::SMF::Topic'
   #belongs_to :board, 'Forum2Discourse::Models::SMF::Board'
   belongs_to :user, 'Forum2Discourse::Models::SMF::User'
-  has n :attachments, 'Forum2Discourse::Models::SMF::Attachment'
+  has n, :attachments, 'Forum2Discourse::Models::SMF::Attachment'
 
   def to_discourse
     return nil if topic==nil or topic.board==nil or topic.board.category==nil?
@@ -34,6 +34,9 @@ class Forum2Discourse::Models::SMF::Message
             raw = raw + "\n" + "<a class=\"attachment\" href=\"" + attachment.url + "\">" + attachment.filename + "</a> (" + ("%0.2f" % attachment.size/1000) + ")"
         end
     end
+    
+    raw.gsub!("http://forum.openframeworks.cc/index.php/topic,([0-9]+)(.([0-9]+)?(.html)?(#msg[0-9]+)","http://forum.openframeworks.cc/t/l/\1")
+    raw.gsub!("http://forum.openframeworks.cc/index.php?topic=([0-9]+)(.([0-9]+)?(.html)?(#msg[0-9]+)","http://forum.openframeworks.cc/t/l/\1")
     return post
   end
 end
