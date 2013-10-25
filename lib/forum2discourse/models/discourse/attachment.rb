@@ -4,6 +4,7 @@ class Forum2Discourse::Models::SMF::Attachment
   storage_names[:default] = "smf_attachments"
 
   property :id,   Serial, field: 'ID_ATTACH'
+  property :id_message,   Serial, field: 'ID_MSG'
   property :id_user,   Serial, field: 'ID_MEMBER'
   property :filename, Text, field: 'filename'
   property :size, Integer, field: 'size'
