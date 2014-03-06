@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'data_mapper'
   s.add_dependency 'dm-postgres-adapter'
   s.add_dependency 'dm-mysql-adapter'
+  s.add_dependency 'htmlentities'
 end

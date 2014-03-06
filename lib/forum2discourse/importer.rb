@@ -5,7 +5,7 @@ class TextSentinel
 end
 
 class Forum2Discourse::Importer
-  def initialize(topics)
+  def initialize(topics=[])
     @topics = topics
     @categories = []
   end
@@ -25,21 +25,31 @@ class Forum2Discourse::Importer
   end
 
   def import_topic(topic)
-    log "Importing '#{topic.title}'"
-    user = discourse_user(topic.posts.first.user)
-    guardian = Guardian.new(user)
-    find_or_create_category(user, topic.category)
-    discourse_topic = TopicCreator.new(user, guardian, topic.serialize).create
-    import_topic_posts(discourse_topic, topic.posts)
-  rescue
-    puts "FAILED TO IMPORT TOPIC #{topic.title}"
-    puts "Error: #{$!.message}"
-    puts $!.backtrace.join("\n")
+      with_permissive_settings do
+        log "Importing '#{topic.title}'"
+        user = discourse_user(topic.posts.first.user)
+        guardian = Guardian.new(user)
+        find_or_create_category(user, topic.category)
+        discourse_topic = TopicCreator.new(user, guardian, topic.serialize).create
+        import_topic_posts(discourse_topic, topic.posts)
+      end
+      rescue
+        puts "FAILED TO IMPORT TOPIC #{topic.title}"
+        puts "Error: #{$!.message}"
+        puts $!.backtrace.join("\n")
   end
 
   def find_or_create_category(user, category)
     unless @categories.include? category
-      @categories << Category.create_with(user: user).find_or_create_by_name(category)
+      categoryobj = Category.find_or_create_by_name(category)
+      puts categoryobj.name
+      if categoryobj != nil
+        categoryobj.user = user
+        categoryobj.save
+        @categories << categoryobj
+      else
+        @categories << Category.create_with(user: user).find_or_create_by_name(category)
+      end
     end
   end
 
